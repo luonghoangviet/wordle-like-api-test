@@ -11,6 +11,7 @@ def step_impl(context, filename):
     filename = file_util.resolve_file_name(filename)
     schemas_util.add_openapi_schemas(filename, context)
 
+
 @then('the response json matches defined schema {schema_id}')
 def step_impl(context, schema_id):
     schemas_util.response_json_matches_defined_schema(context, schema_id)

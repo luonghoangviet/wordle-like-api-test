@@ -36,14 +36,14 @@ Feature: Verify API Guess against a random word (/random)
     ]
     """
 
-    Scenario: Guess a random word with valid size and seed
+  Scenario: Guess a random word with valid size and seed
     When I make a GET request to "/random" with parameters
       | guess | seed  | size |
       | out   | 12345 | 3    |
     Then the response status code should equal 200
     And the response status message should equal "OK"
 
-    Scenario Outline: Guess random word that contain non-letters
+  Scenario Outline: Guess random word that contain non-letters
     When I make a GET request to "/random" with parameters
       | guess   | size   |
       | <guess> | <size> |
@@ -79,7 +79,7 @@ Feature: Verify API Guess against a random word (/random)
     And the response status message should equal "Internal Server Error"
 
 
-    Scenario: Guess a random word when size is not match with guess
+  Scenario: Guess a random word when size is not match with guess
     When I make a GET request to "/daily" with parameters
       | guess  | size |
       | tester | 7    |
@@ -90,7 +90,7 @@ Feature: Verify API Guess against a random word (/random)
     Guess must be the same length as the word
     """
 
- Scenario: Guess a daily world when missing required field
+  Scenario: Guess a daily world when missing required field
     When I make a GET request to "/random" with parameters
       | size |
       | 6    |

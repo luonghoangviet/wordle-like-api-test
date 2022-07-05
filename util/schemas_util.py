@@ -20,7 +20,8 @@ def add_openapi_schemas(openapi_filename, context):
     reader = OpenApiReader(filename, loader)
     add_json_schemas(reader.schemas, context)
 
-def response_json_matches(response,schema_str):
+
+def response_json_matches(response, schema_str):
     schema = json.loads(schema_str)
     json_body = response.json()
     validate_with_schema(json_body, schema)
@@ -31,6 +32,7 @@ def response_json_matches_defined_schema(context, schema_id):
     schema = context.schemas.get(schema_id)
     json_body = context.response.json()
     validate_with_schema(json_body, schema)
+
 
 def validate_with_schema(json_body, schema):
     jsonschema.validate(json_body, schema)
@@ -57,6 +59,7 @@ class OpenApiReader:
         content = jsonref.JsonRef.replace_refs(content, loader=self._loader)
         return content
 
+
 class ReferenceFileLoader:
     def __init__(self, root_dir):
         self.root_dir = root_dir
@@ -68,4 +71,3 @@ class ReferenceFileLoader:
     def _load(self, reader, filename):
         with open(filename) as fin:
             return reader.load(fin)
-
