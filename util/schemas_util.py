@@ -20,23 +20,19 @@ def add_openapi_schemas(openapi_filename, context):
     reader = OpenApiReader(filename, loader)
     add_json_schemas(reader.schemas, context)
 
-def response_json_matches(response, schema_str):
-    """
-    """
+def response_json_matches(response,schema_str):
     schema = json.loads(schema_str)
     json_body = response.json()
     validate_with_schema(json_body, schema)
 
 
 def response_json_matches_defined_schema(context, schema_id):
-    """
-    """
     # schema_id = context.vars.resolve(schema_id)
     schema = context.schemas.get(schema_id)
     json_body = context.response.json()
     validate_with_schema(json_body, schema)
 
-def validate_with_schema(json_body, schema)  :
+def validate_with_schema(json_body, schema):
     jsonschema.validate(json_body, schema)
 
 

@@ -45,3 +45,42 @@ Feature: Verify API Guess against a selected word (/word)
       }
     ]
     """
+
+  Scenario Outline: Guess selected word that contain non-letters
+    When I make a GET request to "/word/hello" with parameters
+      | guess   |
+      | <guess> |
+    Then the response status code should equal 400
+    And the response status message should equal "Bad Request"
+    And the response contains text
+    """
+    Guess must only contain letters
+    """
+
+    Examples:
+      | guess |
+      | Be ha |
+      | $in5b |
+      | 12345 |
+
+  Scenario: Guess a selected world when missing required field
+    When I make a GET request to "/word/hello" with parameters
+      | size |
+      | 6    |
+    Then the response status code should equal 422
+    And the response status message should equal "Unprocessable Entity"
+    And the response contains a json body like
+    """
+    {
+      "detail": [
+        {
+          "loc": [
+            "query",
+            "guess"
+          ],
+          "msg": "field required",
+          "type": "value_error.missing"
+        }
+      ]
+    }
+    """
